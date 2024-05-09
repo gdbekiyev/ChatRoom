@@ -1,2 +1,6 @@
 # ChatRoom
-Simple RealTime ChatRoom frontEnd JavaScript, BackEnd Django, Redis, PostgreSql, RabbitMq, Celery, WeSocket
+Simple RealTime ChatRoom 
+FrontEnd: JavaScript, HTML,CSS;
+BackEnd: Python, Django, Redis, WebSocket
+Database: PostgreSql;
+MessageBroker: RabbitMq, Celery;
