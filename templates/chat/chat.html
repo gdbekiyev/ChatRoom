@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anonymous Chat</title>
+    <!-- Include your CSS for styling -->
+</head>
+<body>
+<h1>Anonymous Chat</h1>
+<div id="chatbox">
+    <!-- Messages will be displayed here -->
+</div>
+<input type="text" id="message-input" placeholder="Enter message">
+<button id="send-button">Send</button>
+
+{#<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>#}
+<script>
+    const chatSocket = new WebSocket('ws://' + window.location.host + '/chatws/');
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        const message = data['message'];
+        console.log(message);
+        // Handle incoming message
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    // Send message to
+    chatSocket.onopen=function (e){
+
+    }
+
+
+    function sendMessage(message) {
+        chatSocket.send(JSON.stringify({'message': message}));
+
+    }
+
+
+
+
+</script>
+</body>
+</html>

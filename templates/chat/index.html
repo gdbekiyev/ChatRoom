@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anonymous Chat</title>
+    <!-- Include your CSS for styling -->
+    <link rel="stylesheet" href="{% static 'assets/style.css' %}"/>
+
+</head>
+<body>
+<input type="text" hidden id="userName" value="{{ usernameDefault }}">
+<section class="msger">
+    <header class="msger-header">
+        <div class="msger-header-title">
+            <i class="fas fa-comment-alt"></i> SimpleChat
+        </div>
+        <div class="msger-header-options">
+            <span><i class="fas fa-cog"></i></span>
+        </div>
+    </header>
+
+    <main class="msger-chat">
+        <script>
+
+            fetch('/chatApi/')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    {#console.log('Data received:', data);#}
+                    for (i in data) {
+                        console.log(data[i]['content'])
+                        if (data[i]['sender'] === localStorage.getItem('userID')) {
+                            appendMessage(data[i]['sender'], PERSON_IMG, "right", data[i]['content']);
+                        } else {
+                            appendMessage(data[i]['sender'], BOT_IMG, "left", data[i]['content']);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+
+
+            {##}
+            {##}
+
+        </script>
+    </main>
+
+    <form class="msger-inputarea">
+        <input type="text" class="msger-input" placeholder="Enter your message...">
+        <button type="submit" class="msger-send-btn">Send</button>
+    </form>
+</section>
+<script>localStorage.setItem('usernameFromServer', document.getElementById('userName').value)</script>
+<script src="{% static 'assets/java.js' %}"></script>
+</body>
+</html>
